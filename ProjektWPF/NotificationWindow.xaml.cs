@@ -10,25 +10,19 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Windows.Threading;
 
 namespace ProjektWPF
 {
     /// <summary>
-    /// Interaction logic for MainWindow.xaml
+    /// Interaction logic for NotificationWindow.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class NotificationWindow : Window
     {
-        public MainWindow()
+        public NotificationWindow()
         {
             InitializeComponent();
-        }
-
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-            NotificationWindow window = new NotificationWindow();
-            window.Show();
         }
     }
 }

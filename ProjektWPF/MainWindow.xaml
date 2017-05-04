@@ -4,9 +4,25 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ProjektWPF"
+        xmlns:wpfToolkit="clr-namespace:Xceed.Wpf.Toolkit;assembly=Xceed.Wpf.Toolkit"
         mc:Ignorable="d"
         Title="MainWindow" Height="350" Width="525">
     <Grid>
-        
+        <TabControl>
+            <TabItem Header="Kalendarz">
+                <Button Width="30" Height="30" Click="Button_Click" Content="Klik"></Button>
+            </TabItem>
+            <TabItem Header="Kontakty">
+                <Grid>
+                    <Button Content="kliknij" Width="50" Height="30"></Button>
+                </Grid>
+            </TabItem>
+            <TabItem Header="Adresy">
+                <Grid>
+                    <wpfToolkit:DateTimeUpDown Width="300" Height="100" Format="ShortTime"></wpfToolkit:DateTimeUpDown>
+                </Grid>
+            </TabItem>
+            <TabItem Header="Alarmy">Alarmy</TabItem>
+        </TabControl>
     </Grid>
 </Window>
