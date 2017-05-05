@@ -25,10 +25,23 @@ namespace ProjektWPF
             InitializeComponent();
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
+        private void NotificationWindow(object sender, RoutedEventArgs e)
         {
             NotificationWindow window = new NotificationWindow();
             window.Show();
+        }
+
+        private void AddAdressWindow(object sender, RoutedEventArgs e)
+        {
+            AddAdressWindow window = new AddAdressWindow();
+            window.Show();
+        }
+
+        private void AddReminderWindow(object sender, RoutedEventArgs e)
+        {
+            Reminder window = new Reminder();
+            window.Owner = this;
+            window.ShowDialog();
         }
     }
 }
