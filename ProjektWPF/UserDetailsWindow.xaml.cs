@@ -17,9 +17,9 @@ namespace ProjektWPF
     /// <summary>
     /// Interaction logic for Details.xaml
     /// </summary>
-    public partial class Details : Window
+    public partial class UserDetailsWindow : Window
     {
-        public Details()
+        public UserDetailsWindow()
         {
             InitializeComponent();
         }

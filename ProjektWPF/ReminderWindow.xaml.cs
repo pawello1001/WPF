@@ -17,9 +17,9 @@ namespace ProjektWPF
     /// <summary>
     /// Interaction logic for Reminder.xaml
     /// </summary>
-    public partial class Reminder : Window
+    public partial class ReminderWindow : Window
     {
-        public Reminder()
+        public ReminderWindow()
         {
             InitializeComponent();
         }

@@ -39,7 +39,7 @@ namespace ProjektWPF
 
         private void AddReminderWindow(object sender, RoutedEventArgs e)
         {
-            Reminder window = new Reminder();
+            ReminderWindow window = new ReminderWindow();
             window.Owner = this;
             window.ShowDialog();
         }
