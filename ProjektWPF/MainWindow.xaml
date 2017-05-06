@@ -22,7 +22,7 @@
                         <ColumnDefinition Width="auto"/>
                     </Grid.ColumnDefinitions>
                     <StackPanel Margin="3" Grid.Column="2" Grid.Row="1">
-                        <Button Margin="3" Padding="10,3" Name="addContact">Dodaj...</Button>
+                        <Button Margin="3" Padding="10,3" Name="addContact" Click="AddUserWindow">Dodaj...</Button>
                         <Button Margin="3" Padding="10,3" Name="deleteContact" IsEnabled="False">Usuń</Button>
                         <Button Margin="3" Padding="10,3" Name="editContact" IsEnabled="False">Edytuj...</Button>
                         <Button Margin="3" Padding="10,3" Name="showContact" IsEnabled="False">Szczegóły...</Button>

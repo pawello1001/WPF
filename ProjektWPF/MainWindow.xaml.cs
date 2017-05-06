@@ -43,5 +43,11 @@ namespace ProjektWPF
             window.Owner = this;
             window.ShowDialog();
         }
+
+        private void AddUserWindow(object sender, RoutedEventArgs e)
+        {
+            AddUserWindow window = new ProjektWPF.AddUserWindow();
+            window.Show();
+        }
     }
 }
