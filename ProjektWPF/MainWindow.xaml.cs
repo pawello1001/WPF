@@ -21,11 +21,16 @@ namespace ProjektWPF
     public partial class MainWindow : Window
     {
         List<Address> addresses;
+        List<User> users;
+
         AddAdressWindow addAdressWindow;
+        AddUserWindow addUserWindow;
+        ShowUserWindow showUserWindow;
 
         public MainWindow()
         {
             addresses = new List<Address>();
+            users = new List<User>();
             InitializeComponent();
         }
 
@@ -97,6 +102,105 @@ namespace ProjektWPF
             }
         }
 
+        private void AddUserWindow(object sender, RoutedEventArgs e)
+        {
+            addUserWindow = new AddUserWindow();
+            foreach(var item in addresses)
+            {
+                addUserWindow.addressesComboBox.Items.Add(item.address);
+            }
+            if(addUserWindow.ShowDialog() == true)
+            {
+                users.Add(new User()
+                {
+                    id = users.Count,
+                    name = addUserWindow.name,
+                    surname = addUserWindow.surname,
+                    email = addUserWindow.email,
+                    phone = addUserWindow.phone,
+                    address = addUserWindow.address                    
+                });
+            }
+            foreach(var item in addresses)
+            {
+                if(item.address.Equals(addUserWindow.address))
+                {
+                    item.name = addUserWindow.name + " " + addUserWindow.surname;
+                }
+            }
+            refresh();
+        }
+
+        private void DeleteUserWindow(object sender, RoutedEventArgs e)
+        {
+            if (contactsListBox.SelectedItem != null)
+            {
+                int index = contactsListBox.SelectedIndex;
+                users.RemoveAt(index);
+                refresh();
+            }
+        }
+
+        private void EditUserWindow(object sender, RoutedEventArgs e)
+        {
+            User user = (User)contactsListBox.SelectedItem;
+            addUserWindow = new AddUserWindow();
+
+            addUserWindow.id = user.id;
+            addUserWindow.nameBox.Text = user.name;
+            addUserWindow.surnameBox.Text = user.surname;
+            addUserWindow.emailBox.Text = user.email;
+            addUserWindow.phoneBox.Text = user.phone.ToString();
+            foreach(var item in addresses)
+            {
+                addUserWindow.addressesComboBox.Items.Add(item.address);
+            }
+            if (addUserWindow.ShowDialog() == true)
+            {
+                foreach (var item in users)
+                {
+                    if (item.id == addUserWindow.id)
+                    {
+                        item.name = addUserWindow.name;
+                        item.surname = addUserWindow.surname;
+                        item.email = addUserWindow.email;
+                        item.phone = addUserWindow.phone;
+                        item.address = addUserWindow.address;
+                    }
+                }
+            }
+            refresh();
+        }
+
+        private void ShowUserWindow(object sender, RoutedEventArgs e)
+        {
+            User user = (User)contactsListBox.SelectedItem;
+            showUserWindow = new ShowUserWindow();
+
+            showUserWindow.showUserName.Text = user.name;
+            showUserWindow.showUserSurname.Text = user.surname;
+            showUserWindow.showUserEmail.Text = user.email;
+            showUserWindow.showUserPhone.Text = user.phone.ToString();
+            showUserWindow.showUserAddress.Text = user.address;
+            showUserWindow.Show();
+        }
+
+        private void UserWindowSelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (contactsListBox.SelectedItem != null)
+            {
+                deleteContact.IsEnabled = true;
+                editContact.IsEnabled = true;
+                showContact.IsEnabled = true;
+            }
+            else
+            {
+                deleteContact.IsEnabled = false;
+                editContact.IsEnabled = false;
+                showContact.IsEnabled = false;
+            }
+        }
+
         private void AddReminderWindow(object sender, RoutedEventArgs e)
         {
             ReminderWindow window = new ReminderWindow();
@@ -104,16 +208,12 @@ namespace ProjektWPF
             window.ShowDialog();
         }
 
-        private void AddUserWindow(object sender, RoutedEventArgs e)
-        {
-            AddUserWindow window = new ProjektWPF.AddUserWindow();
-            window.Show();
-        }
-
         public void refresh()
         {
             addressesListBox.ItemsSource = "";
             addressesListBox.ItemsSource = addresses;
+            contactsListBox.ItemsSource = "";
+            contactsListBox.ItemsSource = users;
         }
 
     }

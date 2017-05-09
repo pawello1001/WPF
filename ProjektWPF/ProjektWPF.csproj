@@ -170,6 +170,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="ShowUserWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="UserDetailsWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -185,6 +189,10 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="ShowUserWindow.xaml.cs">
+      <DependentUpon>ShowUserWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="User.cs" />
     <Compile Include="UserDetailsWindow.xaml.cs">
       <DependentUpon>UserDetailsWindow.xaml</DependentUpon>
     </Compile>

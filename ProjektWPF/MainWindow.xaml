@@ -23,19 +23,18 @@
                     </Grid.ColumnDefinitions>
                     <StackPanel Margin="3" Grid.Column="2" Grid.Row="1">
                         <Button Margin="3" Padding="10,3" Name="addContact" Click="AddUserWindow">Dodaj...</Button>
-                        <Button Margin="3" Padding="10,3" Name="deleteContact" IsEnabled="False">Usuń</Button>
-                        <Button Margin="3" Padding="10,3" Name="editContact" IsEnabled="False">Edytuj...</Button>
-                        <Button Margin="3" Padding="10,3" Name="showContact" IsEnabled="False">Szczegóły...</Button>
+                        <Button Margin="3" Padding="10,3" Name="deleteContact" IsEnabled="False" Click="DeleteUserWindow">Usuń</Button>
+                        <Button Margin="3" Padding="10,3" Name="editContact" IsEnabled="False" Click="EditUserWindow">Edytuj...</Button>
+                        <Button Margin="3" Padding="10,3" Name="showContact" IsEnabled="False" Click="ShowUserWindow">Szczegóły...</Button>
                     </StackPanel>
-                    <ListBox Name="contactsListBox" Margin="3" Grid.Row="1">
+                    <ListBox Name="contactsListBox" Margin="3" Grid.Row="1" SelectionChanged="UserWindowSelectionChanged">
                         <ListBox.ItemTemplate>
                             <DataTemplate>
                                 <StackPanel Orientation="Horizontal">
-                                    <TextBlock Text="{Binding Name}"></TextBlock>
+                                    <TextBlock Text="{Binding name}"></TextBlock>
                                     <TextBlock Text="   "></TextBlock>
-                                    <TextBlock Text="{Binding Surname}"></TextBlock>
+                                    <TextBlock Text="{Binding surname}"></TextBlock>
                                     <TextBlock Text="   "></TextBlock>
-                                    <TextBlock Text="{Binding Email}"></TextBlock>
                                 </StackPanel>
                             </DataTemplate>
                         </ListBox.ItemTemplate>
