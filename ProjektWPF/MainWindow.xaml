@@ -43,45 +43,39 @@
                     <GridSplitter Grid.Column="1" Grid.Row="1" Width="5" ResizeDirection="Columns" HorizontalAlignment="Center"/>
                 </Grid>
             </TabItem>
+            
             <TabItem Header="Adresy">
-                <Grid>
+                <Grid Margin="3">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="auto"/>
-                        <RowDefinition/>
+                        <RowDefinition />
                         <RowDefinition Height="auto"/>
                     </Grid.RowDefinitions>
-                    <Label Margin="5" Grid.Row="0" Content="Lista adresów:"/>
-                    <Grid Grid.Row="1">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="auto"/>
-                        </Grid.ColumnDefinitions>
-                        <!--
-            <ListBox Name="lista" Grid.Column="0" Margin="5" SelectionChanged="buttony">
-                <ListBox.ItemTemplate>
-                    <DataTemplate>
-                        <StackPanel>
-                            <TextBlock Text="tekst">aaa</TextBlock>
-                            <TextBlock Text="tekst">aaa</TextBlock>
-                            <TextBlock Text="tekst">aaa</TextBlock>
-                        </StackPanel>
-                    </DataTemplate>
-                </ListBox.ItemTemplate>
-            </ListBox>-->
-                        <ListBox Name="addessesListBox" Grid.Column="0" Margin="5">
-                            <ListBoxItem>Pizzeria Savona ul.Marszałkowska 26a</ListBoxItem>
-                            <ListBoxItem>Oddział leczenia chorób przyshicznych "Grażyna"</ListBoxItem>
-                            <ListBoxItem>Sklep skorpion ul.Pogodna 9</ListBoxItem>
-                        </ListBox>
-                        <StackPanel Orientation="Vertical" Grid.Column="1" Margin="5">
-                            <Button Padding="3" Margin="3" Click="AddAdressWindow">Dodaj...</Button>
-                            <Button Name="deleteAddress" Padding="3" Margin="3" IsEnabled="false">Usuń</Button>
-                            <Button Name="editAddress" Padding="3" Margin="3" IsEnabled="false">Edytuj...</Button>
-                            <Button Name="previewAddress" Padding="3" Margin="3" IsEnabled="false">Podgląd...</Button>
-                        </StackPanel>
-                    </Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition />
+                        <ColumnDefinition Width="auto"/>
+                        <ColumnDefinition Width="auto"/>
+                    </Grid.ColumnDefinitions>
+                    <StackPanel Margin="3" Grid.Column="2" Grid.Row="1">
+                        <Button Margin="3" Padding="10,3" Click="AddAdressWindow">Dodaj...</Button>
+                        <Button Margin="3" Padding="10,3" Name="deleteAddressButton" IsEnabled="false" Click="DeleteAddressWindow">Usuń</Button>
+                        <Button Margin="3" Padding="10,3" Name="editAddressButton" IsEnabled="false" Click="EditAddressWindow">Edytuj...</Button>
+                    </StackPanel>
+                    <ListBox Name="addressesListBox" Margin="3" Grid.Row="1" SelectionChanged="AddressWindowSelectionChanged">
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="{Binding name}" FontFamily="arial" FontWeight="Bold" Height="auto"></TextBlock>
+                                    <TextBlock Text="   " FontWeight="Bold" Height="auto"></TextBlock>
+                                    <TextBlock Text="{Binding address}" FontFamily="arial" Height="auto"></TextBlock>
+                                </StackPanel>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
+                    <GridSplitter Grid.Column="1" Grid.Row="1" Width="5" ResizeDirection="Columns" HorizontalAlignment="Center"/>
                 </Grid>
             </TabItem>
+            
             <TabItem Header="Przypomnienia">
                 <Grid>
                     <Grid.RowDefinitions>

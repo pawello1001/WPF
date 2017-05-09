@@ -19,9 +19,26 @@ namespace ProjektWPF
     /// </summary>
     public partial class AddAdressWindow : Window
     {
+        public int id;
+        public string name;
+        public string address;
+
         public AddAdressWindow()
         {
             InitializeComponent();
+        }
+
+        private void AddAddressOk(object sender, RoutedEventArgs e)
+        {
+            this.name = nameTextBox.Text;
+            this.address = addressTextBox.Text;
+            DialogResult = true;
+            this.Close();
+        }
+
+        private void AddAddressCancel(object sender, RoutedEventArgs e)
+        {
+            this.Close();
         }
     }
 }

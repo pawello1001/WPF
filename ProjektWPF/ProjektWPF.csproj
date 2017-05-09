@@ -158,6 +158,7 @@
     <Compile Include="AddAdressWindow.xaml.cs">
       <DependentUpon>AddAdressWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Address.cs" />
     <Compile Include="ReminderWindow.xaml.cs">
       <DependentUpon>ReminderWindow.xaml</DependentUpon>
     </Compile>
