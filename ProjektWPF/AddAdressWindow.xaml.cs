@@ -30,10 +30,17 @@ namespace ProjektWPF
 
         private void AddAddressOk(object sender, RoutedEventArgs e)
         {
-            this.name = nameTextBox.Text;
-            this.address = addressTextBox.Text;
-            DialogResult = true;
-            this.Close();
+            if(nameTextBox.Text == "" || addressTextBox.Text == "")
+            {
+                MessageBox.Show("Wypełnij wszystkie pola");
+            }
+            else
+            {
+                this.name = nameTextBox.Text;
+                this.address = addressTextBox.Text;
+                DialogResult = true;
+                this.Close();
+            }
         }
 
         private void AddAddressCancel(object sender, RoutedEventArgs e)

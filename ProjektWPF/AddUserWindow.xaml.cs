@@ -34,19 +34,33 @@ namespace ProjektWPF
         private void AddUserOk(object sender, RoutedEventArgs e)
         {
             long number;
-            this.name = nameBox.Text;
-            this.surname = surnameBox.Text;
-            this.email = emailBox.Text;
-            this.address = addressesComboBox.SelectedItem.ToString();
-            if(Int64.TryParse(phoneBox.Text, out number) == false)
+            if(nameBox.Text == "" || surnameBox.Text == "" || emailBox.Text == "")
             {
-                MessageBox.Show("Podaj prawidłowy numer telefonu");
+                MessageBox.Show("Wypełnij wszystkie pola");
             }
-            else 
+            else
             {
-                this.phone = number;
-                DialogResult = true;
-                this.Close();
+                this.name = nameBox.Text;
+                this.surname = surnameBox.Text;
+                this.email = emailBox.Text;
+                if (Int64.TryParse(phoneBox.Text, out number) == false)
+                {
+                    MessageBox.Show("Podaj prawidłowy numer telefonu");
+                }
+                else
+                {
+                    this.phone = number;
+                    if (addressesComboBox.SelectedItem == null)
+                    {
+                        MessageBox.Show("Nie wybrałeś żadnego adresu");
+                    }
+                    else
+                    {
+                        this.address = addressesComboBox.SelectedItem.ToString();
+                        DialogResult = true;
+                        this.Close();
+                    }
+                }
             }
         }
 

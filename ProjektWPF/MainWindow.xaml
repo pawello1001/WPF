@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:ProjektWPF"
         xmlns:wpfToolkit="clr-namespace:Xceed.Wpf.Toolkit;assembly=Xceed.Wpf.Toolkit"
         mc:Ignorable="d"
-        Title="MainWindow" Height="350" Width="525">
+        Title="Organizer" Height="350" Width="525">
     <Grid>
         <TabControl>
             <TabItem Header="Kontakty">
