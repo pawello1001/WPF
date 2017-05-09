@@ -168,6 +168,13 @@ namespace ProjektWPF
                         item.address = addUserWindow.address;
                     }
                 }
+                foreach (var item in addresses)
+                {
+                    if (item.address.Equals(addUserWindow.address))
+                    {
+                        item.name = addUserWindow.name + " " + addUserWindow.surname;
+                    }
+                }
             }
             refresh();
         }
