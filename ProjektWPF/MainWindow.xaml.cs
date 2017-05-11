@@ -1,7 +1,13 @@
-﻿using System;
+﻿using Quartz;
+using Quartz.Impl;
+using System;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.IO;
 using System.Linq;
+using System.Media;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -11,7 +17,6 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace ProjektWPF
 {
@@ -22,15 +27,24 @@ namespace ProjektWPF
     {
         List<Address> addresses;
         List<User> users;
+        List<Alarm> alarms;
 
         AddAdressWindow addAdressWindow;
         AddUserWindow addUserWindow;
         ShowUserWindow showUserWindow;
+        ReminderWindow reminderWindow;
+        ShowReminderWindow showReminderWindow;
+        NotificationWindow notificationWindow;
+
+        ISchedulerFactory factory;
+        Alarm alarm;
 
         public MainWindow()
         {
             addresses = new List<Address>();
             users = new List<User>();
+            alarms = new List<Alarm>();
+            factory = new StdSchedulerFactory();
             InitializeComponent();
         }
 
@@ -210,9 +224,87 @@ namespace ProjektWPF
 
         private void AddReminderWindow(object sender, RoutedEventArgs e)
         {
-            ReminderWindow window = new ReminderWindow();
-            window.Owner = this;
-            window.ShowDialog();
+            alarm = new Alarm();
+            reminderWindow = new ReminderWindow();
+            if(reminderWindow.ShowDialog() == true)
+            {
+                alarm.id = alarms.Count;
+                alarm.title = reminderWindow.title;
+                alarm.description = reminderWindow.description;
+                alarm.date = reminderWindow.date;
+                alarm.hour = reminderWindow.hour;
+
+                alarms.Add(alarm);
+                Thread thread = new Thread(new ThreadStart(addAlarm));
+                thread.SetApartmentState(ApartmentState.STA);
+                thread.Start();       
+            }
+            refresh();
+        }
+
+        private void DeleteReminderWindow(object sender, RoutedEventArgs e)
+        {
+            if (notificationListBox.SelectedItem != null)
+            {
+                int index = notificationListBox.SelectedIndex;
+                alarms.RemoveAt(index);
+                refresh();
+            }
+        }
+
+        private void EditReminderWindow(object sender, RoutedEventArgs e)
+        {
+            Alarm alarm = (Alarm)notificationListBox.SelectedItem;
+            reminderWindow = new ReminderWindow();
+
+            reminderWindow.id = alarm.id;
+            reminderWindow.titleBox.Text = alarm.title;
+            reminderWindow.descriptionBox.Text = alarm.description;
+            reminderWindow.dateBox.SelectedDate = alarm.date.Date;
+            reminderWindow.hourBox.Value = alarm.hour;
+
+            if (reminderWindow.ShowDialog() == true)
+            {
+                foreach (var item in alarms)
+                {
+                    if (item.id == reminderWindow.id)
+                    {
+                        item.title = reminderWindow.title;
+                        item.description = reminderWindow.description;
+                        item.date = reminderWindow.date;
+                        item.hour = reminderWindow.hour;
+                    }
+                }
+            }
+            refresh();
+        }
+
+        private void ShowReminderWindow(object sender, RoutedEventArgs e)
+        {
+            Alarm alarm = (Alarm)notificationListBox.SelectedItem;
+            showReminderWindow = new ShowReminderWindow();
+
+            showReminderWindow.showAlarmTitle.Text = alarm.title;
+            showReminderWindow.showAlarmDescription.Text = alarm.description;
+            showReminderWindow.showAlarmDate.Text = alarm.date.Date.ToShortDateString();
+            showReminderWindow.showAlarmHour.Text = alarm.hour.ToShortTimeString();
+            showReminderWindow.Show();
+        }
+
+        private void ReminderWindowSelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (notificationListBox.SelectedItem != null)
+            {
+                deleteNotification.IsEnabled = true;
+                editNotification.IsEnabled = true;
+                previewNotification.IsEnabled = true;
+            }
+            else
+            {
+                deleteNotification.IsEnabled = false;
+                editNotification.IsEnabled = false;
+                previewNotification.IsEnabled = false;
+            }
         }
 
         public void refresh()
@@ -221,7 +313,32 @@ namespace ProjektWPF
             addressesListBox.ItemsSource = addresses;
             contactsListBox.ItemsSource = "";
             contactsListBox.ItemsSource = users;
+            notificationListBox.ItemsSource = "";
+            notificationListBox.ItemsSource = alarms;
         }
 
+        public void addAlarm()
+        {
+            int i = 0;
+            while (true)
+            {
+                if (Convert.ToInt16(DateTime.Now.ToString("HH")) == this.alarm.hour.Hour && Convert.ToInt16(DateTime.Now.ToString("mm")) == this.alarm.hour.Minute && Convert.ToInt16(DateTime.Now.ToString("ss")) == this.alarm.hour.Second && DateTime.Today == this.alarm.date)
+                {
+                    if(i == 0)
+                    {
+                        notificationWindow = new NotificationWindow();
+                        notificationWindow.ShowDialog();
+                        i++;
+                        if (notificationWindow.DialogResult == true)
+                        {
+                            i = 0;
+                            break;
+                        }
+                    }   
+                }
+                else continue;
+                Thread.Sleep(1000);
+            }
+        }
     }
 }

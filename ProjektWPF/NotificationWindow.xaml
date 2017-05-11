@@ -5,18 +5,17 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ProjektWPF"
         mc:Ignorable="d"
-        Title="NotificationWindow" Height="300" Width="300">
+        Title="Przypomnienie" Height="300" Width="300">
     <Grid RenderTransformOrigin="0,1" >
 
         <!-- Notification area -->
         <Border BorderThickness="1" Background="Beige" BorderBrush="Black" CornerRadius="10">
             <StackPanel Margin="20">
-                <TextBlock TextWrapping="Wrap" Margin="5">
-          <Bold>Notification data</Bold><LineBreak /><LineBreak />
-          Something just happened and you are being notified of it.
+                <TextBlock TextWrapping="Wrap" Margin="5" Text="{Binding title}">
+          <Bold></Bold><LineBreak /><LineBreak />
                 </TextBlock>
-                <CheckBox Content="Checkable" Margin="5 5 0 5" />
-                <Button Content="Clickable" HorizontalAlignment="Center" />
+                <TextBlock TextWrapping="Wrap" Margin="5" Text="{Binding description}"></TextBlock>
+                <Button Content="Zatrzymaj" HorizontalAlignment="Center" Padding="5" Margin="5" VerticalAlignment="Center" Click="CloseNotificationWindow"/>
             </StackPanel>
         </Border>
 
