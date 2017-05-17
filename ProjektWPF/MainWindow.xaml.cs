@@ -6,6 +6,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Media;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -28,6 +29,7 @@ namespace ProjektWPF
         List<Address> addresses;
         List<User> users;
         List<Alarm> alarms;
+        List<Thread> threads;
 
         AddAdressWindow addAdressWindow;
         AddUserWindow addUserWindow;
@@ -36,7 +38,6 @@ namespace ProjektWPF
         ShowReminderWindow showReminderWindow;
         NotificationWindow notificationWindow;
 
-        ISchedulerFactory factory;
         Alarm alarm;
 
         public MainWindow()
@@ -44,7 +45,7 @@ namespace ProjektWPF
             addresses = new List<Address>();
             users = new List<User>();
             alarms = new List<Alarm>();
-            factory = new StdSchedulerFactory();
+            threads = new List<Thread>();
             InitializeComponent();
         }
 
@@ -235,9 +236,8 @@ namespace ProjektWPF
                 alarm.hour = reminderWindow.hour;
 
                 alarms.Add(alarm);
-                Thread thread = new Thread(new ThreadStart(addAlarm));
-                thread.SetApartmentState(ApartmentState.STA);
-                thread.Start();       
+
+                setAlarm();
             }
             refresh();
         }
@@ -248,6 +248,7 @@ namespace ProjektWPF
             {
                 int index = notificationListBox.SelectedIndex;
                 alarms.RemoveAt(index);
+                setAlarm();
                 refresh();
             }
         }
@@ -276,6 +277,7 @@ namespace ProjektWPF
                     }
                 }
             }
+            setAlarm();
             refresh();
         }
 
@@ -317,6 +319,34 @@ namespace ProjektWPF
             notificationListBox.ItemsSource = alarms;
         }
 
+        public void setAlarm()
+        {
+            if(threads.Any())
+            {
+                foreach (var item in threads)
+                {
+                    item.Abort();
+                }
+                threads.Clear();
+            }
+            if(alarms.Any())
+            {
+                DateTime hour = alarms.Min(item => item.hour);
+                foreach (var item in alarms)
+                {
+                    if (item.hour.Equals(hour))
+                    {
+                        Thread thread = new Thread(new ThreadStart(addAlarm));
+                        threads.Add(thread);
+                        thread.SetApartmentState(ApartmentState.STA);
+                        thread.Start();
+                    }
+                }
+            }
+            
+            refresh();
+        }
+
         public void addAlarm()
         {
             int i = 0;
@@ -332,6 +362,8 @@ namespace ProjektWPF
                         if (notificationWindow.DialogResult == true)
                         {
                             i = 0;
+                            alarms.Remove(alarm);
+                            Thread.CurrentThread.Abort();
                             break;
                         }
                     }   
